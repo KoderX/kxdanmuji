@@ -1,0 +1,28 @@
+﻿<Page x:Class="kxdanmuji.Pages.DanmakuListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:kxdanmuji.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="DanmakuListPage">
+
+    <Grid>
+        <ListBox x:Name="lbList" Background="{x:Null}" BorderBrush="{x:Null}" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="4" Background="Transparent">
+                        <TextBlock Text="{Binding Time}" Width="Auto" Style="{DynamicResource ResourceKey={x:Type TextBlock}}" VerticalAlignment="Center"/>
+                        <Border CornerRadius="2" Background="{Binding TypeColor}" Margin="2" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Type}" Width="Auto" Foreground="White" Margin="2" FontSize="10" />
+                        </Border>
+
+                        <TextBlock Text="{Binding Str1}" Width="Auto" Foreground="{Binding Str1Color}" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Str2}" Width="Auto" Style="{DynamicResource ResourceKey={x:Type TextBlock}}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>

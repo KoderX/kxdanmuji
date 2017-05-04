@@ -1,0 +1,128 @@
+﻿<Window x:Class="kxdanmuji.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kxdanmuji"
+        mc:Ignorable="d"
+        Title="TestWindow" Height="400" Width="500" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="LVItest" TargetType="{x:Type ListViewItem}">
+            <Style.Setters>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="bd" BorderThickness="0">
+                                <!-- 蓝色是整个ListViewItem的一行 -->
+                                <!-- 这里为了更明显 Margin为5 并加了一层叠加背景 -->
+                                <Grid x:Name="panel" Background="Transparent" Margin="0,5">
+                                    <Rectangle Fill="Blue"/>
+                                    <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="ListBoxItem" x:Key="ContainerStyle">
+            <Setter Property="Opacity" Value="0.2" />
+            <Setter Property="MaxHeight" Value="55" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Opacity" Value="1.0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--================================================-->
+        <Style TargetType="DataGrid">
+            <!--网格线颜色-->
+            <Setter Property="CanUserResizeColumns" Value="false"/>
+            <Setter Property="Background" Value="#E6DBBB" />
+            <Setter Property="BorderBrush" Value="#d6c79b" />
+            <Setter Property="HorizontalGridLinesBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="#d6c79b"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalGridLinesBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="#d6c79b"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style  TargetType="DataGridColumnHeader" >
+            <Setter Property="Background" Value="White" />
+            <Setter  Property="FontWeight"  Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <ListView x:Name="lv" ItemContainerStyle="{StaticResource ContainerStyle}" Height="200" VerticalAlignment="Top">
+            
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+
+            <ListView.View>
+                <GridView x:Name="gridview1" AllowsColumnReorder="False" >
+                    <GridViewColumn Header="简介" Width="300">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!-- 红色是GridViewRowPresenter的第一项 -->
+                                <StackPanel Orientation="Horizontal" Background="Red" Margin="0" x:Name="aaa">
+                                    <Grid>
+                                        <Border BorderThickness="1" Height="50" Margin="5" VerticalAlignment="Bottom" Width="50" Background="White"/>
+                                        <Button Width="50" Height="50" Margin="5" Content="按钮" />
+                                    </Grid>
+                                    <StackPanel VerticalAlignment="Center" Margin="5,0,0,0">
+                                        <TextBlock Text="{Binding .}" Width="Auto" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="暂定" Width="130">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!-- 灰色是GridViewRowPresenter的第二项 -->
+                                <Grid Background="Gray" Margin="0" MinWidth="130" MinHeight="60"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+            <ListViewItem x:Name="item1" Content="内容长长长长长长长长长长长长长长长长长长长长长" Style="{StaticResource LVItest}"/>
+            <ListViewItem x:Name="item2" Content="内容短" Style="{StaticResource LVItest}"/>
+            <ListViewItem x:Name="item3" Content="内容长长长长长长长长长长长长长长长长长长长长长"/>
+            <ListViewItem x:Name="item4" Content="内容短"/>
+        </ListView>
+        <DataGrid x:Name="dataGrid" Margin="0,200,0,0" VerticalAlignment="Top" Height="200" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="简介" Width="300">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Background="Red" Margin="0" x:Name="aaa">
+                                <Grid>
+                                    <Border BorderThickness="1" Height="50" Margin="5" VerticalAlignment="Bottom" Width="50" Background="White"/>
+                                    <Button Width="50" Height="50" Margin="5" Content="按钮" />
+                                </Grid>
+                                <StackPanel VerticalAlignment="Center" Margin="5,0,0,0">
+                                    <TextBlock Text="{Binding Name}" Width="Auto" />
+                                    <TextBlock Text="{Binding Author}" Width="Auto" />
+                                    <TextBlock Text="{Binding Description}" Width="Auto" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

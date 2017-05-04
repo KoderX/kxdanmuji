@@ -1,0 +1,85 @@
+﻿<Page x:Class="kxdanmuji.Pages.PluginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:kxdanmuji.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="PluginPage">
+    <Page.Resources>
+        <local:IndexConverter x:Key="IndexConverter"/>
+        <local:TestConverter x:Key="TestConverter"/>
+        <local:StateConverter x:Key="StateConverter"/>
+    </Page.Resources>
+    <Grid>
+        <DataGrid x:Name="dgList" Background="{x:Null}" BorderBrush="{x:Null}" ItemsSource="{Binding}" BorderThickness="0" AutoGenerateColumns="False"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                  CanUserSortColumns="False" IsReadOnly="True" SelectionMode="Single" LoadingRow="dgList_LoadingRow">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="" Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Margin="0,0,5,0" Background="Transparent">
+                                <TextBlock Text="{Binding}" Foreground="#9999" HorizontalAlignment="Right" FontSize="12">
+                                    <TextBlock.DataContext>
+                                        <MultiBinding Converter="{StaticResource IndexConverter }">
+                                            <Binding/>
+                                            <Binding ElementName="dgList" Path="ItemsSource"/>
+                                        </MultiBinding>
+                                    </TextBlock.DataContext>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="插件简介" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <Grid>
+                                    <Border BorderThickness="1" Height="50" Margin="5" VerticalAlignment="Bottom" Width="50" Background="White"/>
+                                    <Image Source="/kxdanmuji;component/Images/default_avatar.png" Width="50" Height="50" Margin="5" />
+                                </Grid>
+                                <StackPanel VerticalAlignment="Center" Margin="5,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=Information.IsCompat,Converter={StaticResource TestConverter}}"/>
+                                        <TextBlock Text="{Binding Path=Information.Name}" Width="Auto"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="作者: "/>
+                                        <TextBlock Text="{Binding Path=Information.Author}" Width="Auto" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Path=Information.Description}" Width="Auto" Opacity="0.8" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="版本信息" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Background="Transparent">
+                                <TextBlock Text="{Binding Path=Information.Version,Converter={StaticResource TestConverter}}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="最新版本: " Width="Auto"/>
+                                    <TextBlock Text="未知" Width="Auto"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="状态" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Background="Transparent">
+                                <TextBlock Text="{Binding Path=State,Converter={StaticResource StateConverter},Mode=OneWay}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
